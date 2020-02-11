@@ -1,6 +1,7 @@
 import React from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks'
+import AddBook from './AddBook'
 
 const getBooksQuery = gql`
     {
@@ -22,6 +23,7 @@ function BookList() {
             <ul>
                 { books.map(book => <li key={book.id}>{book.name}</li>) }
             </ul>
+            <AddBook/>
         </div>
     )
 }
