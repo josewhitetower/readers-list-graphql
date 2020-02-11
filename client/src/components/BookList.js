@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import AddBook from './AddBook'
-import { getBooksQuery} from '../queries/queries'
+import BookDetails from './BookDetails.js'
+import { getBooksQuery } from '../queries/queries'
 
 function BookList() {
-    const { loading, error, data } = useQuery(getBooksQuery);
-    if (loading) return <div>Loading</div>
+  const { loading, error, data } = useQuery(getBooksQuery)
+  const [id, setId] = useState(null)
+  if (loading) return <div>Loading</div>
 
-    const { books } = data
+  const { books } = data
 
-    return (
-        <div>
-            <ul>
-                { books.map(book => <li key={book.id}>{book.name}</li>) }
-            </ul>
-            <AddBook/>
-        </div>
-    )
+  return (
+    <div>
+      <ul>
+        {books.map((book) => (
+          <li key={book.id} onClick={() => setId(book.id)}>
+            {book.name}
+          </li>
+        ))}
+      </ul>
+      {id && <BookDetails id={id} />}
+      <AddBook />
+    </div>
+  )
 }
 
 export default BookList
